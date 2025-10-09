@@ -1,0 +1,17 @@
+:root { --bg:#0b0f1a; --panel:#131a2a; --npc:#1e2b4a; --you:#244025; --text:#e7eefc; }
+*{ box-sizing: border-box }
+body{ margin:0; background:var(--bg); color:var(--text); font:14px/1.4 system-ui, sans-serif }
+#root{ max-width: 720px; margin:0 auto; padding:12px }
+.header{ display:flex; align-items:center; gap:12px; margin-bottom:12px }
+.avatar{ width:40px; height:40px; border-radius:50%; overflow:hidden; background:#0003 }
+.card{ background:var(--panel); border-radius:12px; padding:12px }
+.chat{ display:flex; flex-direction:column; gap:8px; max-height:60vh; overflow:auto }
+.msg{ padding:8px 10px; border-radius:10px; width:fit-content; max-width: 90% }
+.msg.npc{ background:var(--npc) }
+.msg.you{ background:var(--you); margin-left:auto }
+.inputRow{ display:flex; gap:8px; margin-top:10px }
+input[type=text]{ flex:1; padding:10px 12px; border-radius:10px; border:none; outline:none; background:#1a2338; color:var(--text) }
+button{ padding:10px 14px; border:none; border-radius:10px; background:#2b5eff; color:white; cursor:pointer }
+button.secondary{ background:#3a445f }
+.footer{ display:flex; justify-content:space-between; margin-top:10px }
+small.dim{ opacity:.7 }
