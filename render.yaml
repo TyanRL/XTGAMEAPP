@@ -1,6 +1,7 @@
 services:
-  - type: static
+  - type: web # <-- для статического сайта используется type: web
     name: xtgameapp
+    runtime: static # <-- обязательно для статики
     buildCommand: npm ci && npm run build
     staticPublishPath: dist
     envVars:
