@@ -6,4 +6,4 @@ services:
     staticPublishPath: dist
     envVars:
     - key: VITE_API_BASE
-      value: https://tyanrl-xtgame-0153.twc1.net/api/v1/dialogue
+      value: https://tyanrl-xtgame-0153.twc1.net/api/v1
