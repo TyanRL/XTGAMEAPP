@@ -43,7 +43,30 @@ export default function App() {
         setSessionId(res.session_id)
         setNpcName(res.npc_name || 'NPC')
         setNpcDescription(res.npc_description || '')
-        setGender(res.gender)
+        {
+          const g = (res.gender as any)?.toString?.().trim().toLowerCase()
+          switch (g) {
+            case 'female':
+            case 'woman':
+            case 'f':
+            case 'girl':
+              setGender('female')
+              break
+            case 'male':
+            case 'man':
+            case 'm':
+            case 'boy':
+              setGender('male')
+              break
+            case 'neutral':
+            case 'other':
+            case 'unknown':
+              setGender('neutral')
+              break
+            default:
+              if (g) setGender('neutral')
+          }
+        }
         setAvatarUrl(res.avatar_url)
         setMessages([{ from: 'npc', text: res.reply }])
       } catch (e) {
@@ -80,10 +103,13 @@ export default function App() {
     try { tg.close() } catch {}
   }
 
+  // Вычисляем финальный src для аватара: приоритет avatarUrl, затем по gender
+  const displayedAvatar = avatarUrl || (gender === 'female' ? femaleAvatar : gender === 'male' ? maleAvatar : neutralAvatar)
+
   return (
     <div>
       <div className="header">
-        <div className="avatar"><img src={avatarUrl || (gender === 'male' ? maleAvatar : gender === 'female' ? femaleAvatar : neutralAvatar)} alt="npc" width={40} height={40} /></div>
+        <div className="avatar"><img src={displayedAvatar} alt="npc" width={40} height={40} onError={() => { if (avatarUrl) setAvatarUrl(undefined) }} /></div>
         <div>
           <div><strong>{npcName}</strong></div>
           <small className="dim">Мини‑приложение диалога</small>
