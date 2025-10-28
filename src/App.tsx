@@ -117,7 +117,7 @@ export default function App() {
       </div>
 
       {npcDescription ? <div style={{ margin: '6px 0 8px' }}><small className="dim">{npcDescription}</small></div> : null}
-      <ChatWindow messages={messages} />
+      <ChatWindow messages={messages} npcName={npcName} />
       <MessageInput onSend={onSend} />
 
       <div className="footer">
