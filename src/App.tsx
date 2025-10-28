@@ -3,7 +3,9 @@ import { ChatWindow } from './components/ChatWindow'
 import { MessageInput } from './components/MessageInput'
 import { getTelegram } from './lib/telegram'
 import { api } from './lib/api'
-import avatar from './assets/npc_avatar.png'
+import maleAvatar from './assets/npc_avatar.png'
+import femaleAvatar from './assets/npc_woman_avatar.png'
+import neutralAvatar from './assets/npc_neutral_avatar.png'
 
 // Вытаскиваем npc_id из query (?npc=...)
 function useQuery() {
@@ -23,6 +25,9 @@ export default function App() {
   const [npcName, setNpcName] = useState<string>('NPC')
   const [messages, setMessages] = useState<Msg[]>([])
   const [busy, setBusy] = useState(false)
+  const [npcDescription, setNpcDescription] = useState<string>('')
+  const [gender, setGender] = useState<'male' | 'female' | 'neutral' | undefined>(undefined)
+  const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined)
 
   // Инициализация WebApp UI
   useEffect(() => { tg.ready() }, [])
@@ -37,6 +42,9 @@ export default function App() {
         if (!mounted) return
         setSessionId(res.session_id)
         setNpcName(res.npc_name || 'NPC')
+        setNpcDescription(res.npc_description || '')
+        setGender(res.gender)
+        setAvatarUrl(res.avatar_url)
         setMessages([{ from: 'npc', text: res.reply }])
       } catch (e) {
         setMessages([{ from: 'npc', text: '…не удаётся начать диалог. Попробуйте позже.' }])
@@ -53,6 +61,7 @@ export default function App() {
     setBusy(true)
     try {
       const res = await api.message(sessionId, text, user_id, initData)
+      if (res.npc_description) setNpcDescription(res.npc_description)
       setMessages((m) => [...m, { from: 'npc', text: res.reply }])
       if (res.done) {
         // по желанию — сообщить боту и закрыть
@@ -74,13 +83,14 @@ export default function App() {
   return (
     <div>
       <div className="header">
-        <div className="avatar"><img src={avatar} alt="npc" width={40} height={40} /></div>
+        <div className="avatar"><img src={avatarUrl || (gender === 'male' ? maleAvatar : gender === 'female' ? femaleAvatar : neutralAvatar)} alt="npc" width={40} height={40} /></div>
         <div>
           <div><strong>{npcName}</strong></div>
           <small className="dim">Мини‑приложение диалога</small>
         </div>
       </div>
 
+      {npcDescription ? <div style={{ margin: '6px 0 8px' }}><small className="dim">{npcDescription}</small></div> : null}
       <ChatWindow messages={messages} />
       <MessageInput onSend={onSend} />
 

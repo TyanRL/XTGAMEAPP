@@ -13,8 +13,19 @@ async function req<T>(path: string, body: unknown, initData?: string): Promise<T
   return res.json();
 }
 
-export type StartResp = { reply: string; session_id: string; npc_name?: string; avatar_url?: string };
-export type ContinueResp = { reply: string; done?: boolean };
+export type StartResp = {
+  reply: string;
+  session_id: string;
+  npc_name?: string;
+  avatar_url?: string;
+  npc_description?: string;
+  gender?: 'male' | 'female' | 'neutral';
+};
+export type ContinueResp = {
+  reply: string;
+  done?: boolean;
+  npc_description?: string;
+};
 
 export const api = {
   start: (npc_id: string, user_id?: number, initData?: string) =>
