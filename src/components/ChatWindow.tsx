@@ -9,7 +9,7 @@ export function ChatWindow({ messages, npcName }: { messages: Msg[]; npcName?: s
     <div className="card chat">
       {messages.map((m, i) => (
         <div key={i} className={`msg ${m.from === 'npc' ? 'npc' : 'you'}`}>
-          <strong>{m.from === 'npc' ? `${npcLabel}: ` : 'Вы: '}</strong>{m.text}
+          <strong>{m.from === 'npc' ? `${npcLabel}: ` : 'Вы: '}</strong>
           <ReactMarkdown>{m.text}</ReactMarkdown>
         </div>
       ))}
