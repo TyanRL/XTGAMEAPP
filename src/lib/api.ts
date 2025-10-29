@@ -32,6 +32,6 @@ export const api = {
     req<StartResp>('/dialog/start', { npc_id, user_id }, initData),
   message: (session_id: string, text: string, user_id?: number, initData?: string) =>
     req<ContinueResp>('/dialog/continue', { session_id, text, user_id }, initData),
-  end: (session_id: string, user_id?: number, initData?: string) =>
-    req<{}>('/dialog/end', { session_id, user_id }, initData)
+  end: (session_id: string, npc_id: string, user_id?: number, initData?: string) =>
+    req<{}>('/dialog/end', { session_id, user_id, npc_id }, initData)
 };

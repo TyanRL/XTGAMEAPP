@@ -98,7 +98,7 @@ export default function App() {
   }
 
   async function onEnd() {
-    try { if (sessionId) await api.end(sessionId, user_id, initData) } catch {}
+    try { if (sessionId) await api.end(sessionId, npc_id, user_id,  initData) } catch {}
     try { (window as any).Telegram?.WebApp?.sendData?.('dialog_finished') } catch {}
     try { tg.close() } catch {}
   }
