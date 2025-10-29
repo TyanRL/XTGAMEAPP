@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactMarkdown from 'react-markdown'
 
 type Msg = { from: 'npc' | 'you'; text: string }
 
@@ -9,6 +10,7 @@ export function ChatWindow({ messages, npcName }: { messages: Msg[]; npcName?: s
       {messages.map((m, i) => (
         <div key={i} className={`msg ${m.from === 'npc' ? 'npc' : 'you'}`}>
           <strong>{m.from === 'npc' ? `${npcLabel}: ` : 'Вы: '}</strong>{m.text}
+          <ReactMarkdown>{m.text}</ReactMarkdown>
         </div>
       ))}
     </div>
